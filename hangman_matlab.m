@@ -13,11 +13,16 @@ function Hangman
 % This is the main function to run the program
 
 fprintf("Welcome to hangman\n");
+fprintf("Guess the right word and you win! You have 6 tries. Good luck\n");
 fprintf("\n");
+
+% Call the noose function to draw it
+%
+DrawNoose()
 
 % Define some variables
 %
-Used_letters = [];
+Wrong_Letters = [];
 
 % Randomly generate a word to pick based upon a test case
 %
@@ -38,75 +43,91 @@ switch generate_case
         word = 'determinant';
 end
 
-% find the length of the word
+TheWordToBeGuessed = lower(word); %Converts to lowercase
+MainString = string(TheWordToBeGuessed); % Converts to string
+Length = length(TheWordToBeGuessed); %Finds the length of the string
+
+AmountOfLetters = isletter(TheWordToBeGuessed);
+
+%Print underscores for all unknown letters
 %
-word_length = strlength(word)
-
-for i=1:word_length
-    if(isletter)
-        word[i] = 
-
-
-
-
-% Call the noose function to draw it
-%
-DrawNoose()
-
-% Go into a loop as long as you can guess a letter
-%
-%while 1
+for i=1:Length
     
-
-%    word_a = 
-    
-% call the word checker function
-%
-%word_checker(word, vargin(1))
-%
-%end
-
+ String1= fprintf('_ ');
 
 end
 
+%Format Neatly
+fprintf("\n");
 
-function word_checker(word_a, letter_a)
-% This function checks if the letter provided matches the word
+% Go into a loop as long as you can guess a letter
+%
+counter = 0;
+
+% This portion of the code checks if the letter provided matches the word
 % That has been randomly generated
 % letter_a : the letter provided by the user
 % word_a: the word generated
 
+used_letters = "";
+AmountWrong = 0;
+
 % check if the letter is in the word
 %
 
-% Ask the user to input a letter:
-%
-fprintf("Input a letter:\n")
-
-if isempty(strfind(word_a, letter_a))
-    Used_words = append(used_words, letter_a);
-  
-    % CALL THE HANGMAN BODYPART FUNCTION HERE
-    % !!!!
-    AmountWrong = AmountWrong + 1;
+if AmountWrong < 6
+    if isempty(strfind(word, letter_guessed))
+        used_letters = append(used_letters, letter_guessed);
+        
+        AmountWrong = AmountWrong + 1;
     
-    % call the hangman bodypart function
-    %
-    DrawHangingMan(AmountWrong)
-    
-    
-    if AmountWrong == 6
-        quit;
-    end
-    
-else
-    % CALL THE FUNCTION THAT DISPLAYS YOU GOT THE LETTER!
+        % call the hangman bodypart function
+        %
+        DrawHangingMan(AmountWrong)
+        fprintf("used_letters: %s ", used_letters)
+        
+    else
+            % CALL THE FUNCTION THAT DISPLAYS YOU GOT THE LETTER!
     %!!!!
     %guessed
-    
-end
+    fprintf("Nice, you got one\n");
+        
+    end
+        
+elseif AmountWrong == 6
+    quit;
 
 end
+    
+
+
+while 1
+    counter  = counter+1;
+    % Print the wrong letters each time one guesses
+    fprintf("Letters tested: ")
+    for i=1:length(Wrong_Letters)
+        fprintf("%s ", Wrong_Letters(i))
+    end
+
+    % format neatly
+    fprintf("\n");
+
+    % take the user's input from the command window
+    %s
+    letter_guessed = input("Input a Letter:", 's');
+    
+    % call the word_checker function
+    %
+    word_checker(TheWordToBeGuessed, letter_guessed)
+    
+    if counter == 2
+        break;
+    end
+end
+
+
+end
+
 
 
 % call the noose function to draw the noose
